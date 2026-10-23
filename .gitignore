@@ -1,0 +1,27 @@
+# API keys and secrets
+.env
+.env.*
+!.env.example
+
+# Python environment
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Private data
+data/
+uploads/
+storage/
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated files
+generated/
+*.pdf
+
+# Editor files
+.vscode/
+.idea/

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ResumeAI Pro</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="brand">✦ ResumeAI <span>Pro</span></div>
+      <div id="who"></div>
+    </header>
+
+    <main>
+      <!-- ================= Auth ================= -->
+      <section id="auth" class="auth card">
+        <h1>Smarter resumes. Better opportunities.</h1>
+        <p>Analyze your resume, improve your writing and track your progress.</p>
+
+        <input id="email" type="email" placeholder="Email address" autocomplete="email" />
+        <input id="password" type="password" placeholder="Password (8+ characters)" />
+
+        <div class="actions">
+          <button onclick="auth('login')">Sign in</button>
+          <button class="secondary" onclick="auth('register')">Create account</button>
+        </div>
+      </section>
+
+      <!-- ================= Workspace ================= -->
+      <div id="workspace" hidden>
+        <div class="hero">
+          <div>
+            <p class="eyebrow">YOUR CAREER WORKSPACE</p>
+            <h1>Resume intelligence, simplified.</h1>
+            <p>Upload, score, optimize, and improve with AI.</p>
+          </div>
+          <button class="secondary" onclick="logout()">Sign out</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+          <div class="card">
+            <small>Saved resumes</small>
+            <strong id="countRes">0</strong>
+          </div>
+          <div class="card">
+            <small>Analyses</small>
+            <strong id="countAna">0</strong>
+          </div>
+          <div class="card">
+            <small>Best ATS estimate</small>
+            <strong id="best">—</strong>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav>
+          <button data-tab="analyze" class="active">ATS Analyzer</button>
+          <button data-tab="tools">AI Career Studio</button>
+          <button data-tab="library">Resume Library</button>
+          <button data-tab="history">Activity History</button>
+          <button data-tab="admin" id="adminTab" hidden>Admin</button>
+        </nav>
+
+        <!-- Tab: ATS Analyzer -->
+        <section id="analyze" class="tab">
+          <div class="cols">
+            <div class="card">
+              <h2>Upload PDF resume</h2>
+              <p>Text-based PDFs, maximum 8 MB.</p>
+              <input type="file" id="pdf" accept="application/pdf" />
+              <button onclick="upload()">Upload resume</button>
+
+              <h2>Analyze compatibility</h2>
+              <label>Choose resume</label>
+              <select id="resumeSelect"></select>
+
+              <label>Job description</label>
+              <textarea
+                id="job"
+                rows="10"
+                placeholder="Paste the target job description (minimum 20 characters)..."
+              ></textarea>
+
+              <button onclick="analyze()">Calculate ATS score</button>
+            </div>
+
+            <div class="card">
+              <h2>Analysis results</h2>
+              <div id="result">
+                <p class="muted">Upload a resume and analyze it to see your results here.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab: AI Career Studio -->
+        <section id="tools" class="tab" hidden>
+          <div class="card">
+            <h2>AI Career Studio</h2>
+            <p>Uses your saved resume and OpenAI. Requires an API key on the server.</p>
+
+            <label>Resume</label>
+            <select id="aiResume"></select>
+
+            <label>AI feature</label>
+            <select id="aiKind">
+              <option value="optimize">AI Resume Builder &amp; Optimizer</option>
+              <option value="chat">AI Career Chatbot</option>
+              <option value="cover_letter">Cover Letter Generator</option>
+              <option value="interview">Interview Preparation</option>
+              <option value="jobs">Job Role Recommendations</option>
+              <option value="insights">AI Resume Insights</option>
+            </select>
+
+            <label>Target job description (optional)</label>
+            <textarea id="aiJob" rows="5" placeholder="Paste job description"></textarea>
+
+            <label>Your question (for chatbot)</label>
+            <input id="question" placeholder="How can I improve my resume for a backend role?" />
+
+            <div class="actions">
+              <button onclick="generate()">Generate with AI</button>
+              <button class="secondary" onclick="exportOutput()">Export result as PDF</button>
+            </div>
+
+            <pre id="aiOutput" class="output">AI output will appear here.</pre>
+          </div>
+        </section>
+
+        <!-- Tab: Resume Library -->
+        <section id="library" class="tab" hidden>
+          <div class="card">
+            <h2>Resume Library</h2>
+            <div id="resumeList"></div>
+
+            <h2>Previous analyses</h2>
+            <div id="analysisList"></div>
+
+            <h2>Saved AI generations</h2>
+            <div id="generationList"></div>
+          </div>
+        </section>
+
+        <!-- Tab: Activity History -->
+        <section id="history" class="tab" hidden>
+          <div class="card">
+            <h2>Activity log</h2>
+            <div id="activityList"></div>
+          </div>
+        </section>
+
+        <!-- Tab: Admin -->
+        <section id="admin" class="tab" hidden>
+          <div class="card">
+            <h2>Administration</h2>
+            <div id="adminStats"></div>
+          </div>
+        </section>
+      </div>
+
+      <div id="toast" role="status"></div>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
